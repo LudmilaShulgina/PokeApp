@@ -1,24 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import PokeCard from './components/PokeCard';
+import PokeGrid from './components/PokeGrid';
+import pockemons from './mock/pockemons.json';
+import { Col } from 'antd';
 
 function App() {
   return (
     <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
+      <PokeGrid>
+        {pockemons.results.map((item) => {
+          return (
+            <Col key={item.name} span={4}>
+              <PokeCard name={item.name} url={item.url} />
+            </Col>
+          );
+        })}
+      </PokeGrid>
     </div>
   );
 }
