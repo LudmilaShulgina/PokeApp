@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import PokeCard from './components/PokeCard';
 import PokeGrid from './components/PokeGrid';
+import Form from './components/Form';
 import pockemons from './mock/pockemons.json';
 import { Col, Layout } from 'antd';
 import * as classnames from 'classnames';
@@ -14,6 +15,7 @@ function App() {
     <Layout>
       <Header>Header</Header>
       <Content>
+        <Form />
         <PokeGrid>
           {pockemons.results.map((item, index) => {
             return (
