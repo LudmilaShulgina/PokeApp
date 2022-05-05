@@ -5,14 +5,27 @@ const { Meta } = Card;
 import styles from '../assets/styles/modules/card.module.scss';
 
 import Img from '../assets/images/question.jpg';
+import * as classnames from 'classnames';
 
-const PokeCard = ({ name, url, tag }) => {
+const PokeCard = ({ name, url, tag, isSelected }) => {
+  // const handleClick = () => {
+  //   console.log(`Click ${name}`);
+  // };
+  //
+  // const handleMouseEnter = () => {
+  //   console.log(`Mouse enter ${name}`);
+  // };
+
   return (
     <Card
       hoverable
       style={{ width: 240 }}
       cover={<img alt='example' src={Img} />}
-      className={styles[tag]}
+      className={classnames(styles[tag], {
+        [styles.selected]: isSelected,
+      })}
+      // onClick={handleClick}
+      // onMouseEnter={handleMouseEnter}
     >
       <Meta title={name} description={url} />
     </Card>
