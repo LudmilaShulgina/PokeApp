@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-// const defaultState = {
-//   name: 'Иван',
-//   pockemon: 'Пикачу',
-// };
+const Demo = (props) => {
+  const [state, setState] = useState(props);
 
-const Demo = () => {
+  const handleChange = (event) => {
+    setState({
+      ...state,
+      [event.target.dataset.name]: event.target.value,
+    });
+  };
+
+  const handleCancel = () => {
+    setState({
+      ...props,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <form>
-      <input />
+    <form onSubmit={handleSubmit}>
+      <input data-name={'name'} value={state.name} onChange={handleChange} />
 
-      <input />
+      <input
+        data-name={'pockemon'}
+        value={state.pockemon}
+        onChange={handleChange}
+      />
 
-      <button>Cansel</button>
+      <button onClick={handleCancel}>Cansel</button>
     </form>
   );
 };

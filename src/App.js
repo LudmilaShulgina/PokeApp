@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import PokeCard from './components/PokeCard';
 import PokeGrid from './components/PokeGrid';
@@ -11,18 +11,26 @@ import styles from './assets/styles/modules/card.module.css';
 const { Header, Footer, Content } = Layout;
 
 function App() {
+  const [pockemon, setPockemon] = useState();
+
+  const handleClick = (pockemon) => {
+    setPockemon(pockemon);
+  };
+
   return (
     <Layout>
       <Header>Header</Header>
       <Content>
-        <Form />
+        <Form name={'Иван'} pockemon={'Пикачу'} />
         <PokeGrid>
           {pockemons.results.map((item, index) => {
             return (
               <Col key={item.name} span={4}>
                 <PokeCard
+                  isSelected={item.name === pockemon}
+                  onClick={handleClick}
                   tag={'yellow'}
-                  name={index + item.name}
+                  name={item.name}
                   url={item.url}
                   className={classnames('grid', {
                     [styles.yellow]: index % 2 === 0,
