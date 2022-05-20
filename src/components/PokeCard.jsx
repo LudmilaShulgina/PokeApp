@@ -7,7 +7,14 @@ import styles from '../assets/styles/modules/card.module.scss';
 import Img from '../assets/images/question.jpg';
 import * as classnames from 'classnames';
 
-const PokeCard = ({ name, url, tag, isSelected, onClick }) => {
+const PokeCard = ({
+  name = 'No name',
+  url,
+  tag,
+  isSelected,
+  onClick,
+  age = 0,
+}) => {
   const handleClick = () => {
     console.log(12, name);
     onClick(name);
@@ -30,7 +37,7 @@ const PokeCard = ({ name, url, tag, isSelected, onClick }) => {
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
     >
-      <Meta title={name} description={url} />
+      <Meta title={`${name} - ${age}`} description={url} />
     </Card>
   );
 };
