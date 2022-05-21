@@ -13,7 +13,7 @@ function App() {
       <Header>Header</Header>
       <Content>
         <Form name={'Иван'} pockemon={'Пикачу'} />
-        <PokeGrid />
+        <PokeGrid choosenCard={-5} />
       </Content>
       <Footer />
     </Layout>

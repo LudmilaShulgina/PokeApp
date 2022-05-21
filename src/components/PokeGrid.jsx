@@ -14,13 +14,23 @@ const PokeGrid = ({ choosenCard = 0 }) => {
     pockemons.results
   );
   const [pockemon, setPockemon] = useLocalStorage('pockemon', []);
-  const [index, setIndex] = useState(choosenCard);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const newIndex = checkIndex(choosenCard);
+    setIndex(newIndex);
+  }, [choosenCard]);
 
   useEffect(() => {
     console.log(pockemonCollection.length);
   }, [pockemonCollection]);
 
   const handleClickCard = (name) => {
+    // window.localStorage.setItem(
+    //   'pockemon',
+    //   JSON.stringify([...pockemon, name])
+    // );
+
     setPockemon([...pockemon, name]);
   };
 
@@ -37,7 +47,17 @@ const PokeGrid = ({ choosenCard = 0 }) => {
     //ToDo: есть проблема что карточки закончатся и отрисовывать нечего будет
   };
 
+  const checkIndex = (index) => {
+    if (index < 0) {
+      return pockemonCollection.length - 1;
+    } else if (index >= pockemonCollection.length) {
+      return 0;
+    }
+    return index;
+  };
+
   const handleClickButtons = (direction) => {
+    //'left'
     let newIndex = index;
     switch (direction) {
       case 'right':
@@ -50,7 +70,8 @@ const PokeGrid = ({ choosenCard = 0 }) => {
         ++newIndex;
     }
 
-    //ToDo нужно перелистывать по кругу
+    newIndex = checkIndex(newIndex);
+
     setIndex(newIndex);
   };
 
