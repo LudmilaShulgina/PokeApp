@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Col, Row, Button } from 'antd';
 import {
   LeftOutlined,
@@ -16,10 +16,22 @@ const PokeGrid = ({ choosenCard = 0 }) => {
   const [pockemon, setPockemon] = useLocalStorage('pockemon', []);
   const [index, setIndex] = useState(0);
 
+  const checkIndex = useCallback(
+    (index) => {
+      if (index < 0) {
+        return pockemonCollection.length - 1;
+      } else if (index >= pockemonCollection.length) {
+        return 0;
+      }
+      return index;
+    },
+    [pockemonCollection]
+  );
+
   useEffect(() => {
     const newIndex = checkIndex(choosenCard);
     setIndex(newIndex);
-  }, [choosenCard]);
+  }, [choosenCard, checkIndex]);
 
   useEffect(() => {
     console.log(pockemonCollection.length);
@@ -45,15 +57,6 @@ const PokeGrid = ({ choosenCard = 0 }) => {
     // setpockemonCollection(array);
 
     //ToDo: есть проблема что карточки закончатся и отрисовывать нечего будет
-  };
-
-  const checkIndex = (index) => {
-    if (index < 0) {
-      return pockemonCollection.length - 1;
-    } else if (index >= pockemonCollection.length) {
-      return 0;
-    }
-    return index;
   };
 
   const handleClickButtons = (direction) => {
