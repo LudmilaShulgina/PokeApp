@@ -8,16 +8,24 @@ import {
 import pockemons from '../mock/pockemons.json';
 import PokeCard from './PokeCard';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
-const PokeGrid = ({ choosenCard = 0 }) => {
+const PokeGrid = () => {
   const [pockemonCollection, setpockemonCollection] = useState(
     pockemons.results
   );
   const [pockemon, setPockemon] = useLocalStorage('pockemon', []);
   const [index, setIndex] = useState(0);
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const checkIndex = useCallback(
     (index) => {
+      if (!index) {
+        return 0;
+      }
+
       if (index < 0) {
         return pockemonCollection.length - 1;
       } else if (index >= pockemonCollection.length) {
@@ -29,9 +37,13 @@ const PokeGrid = ({ choosenCard = 0 }) => {
   );
 
   useEffect(() => {
-    const newIndex = checkIndex(choosenCard);
+    console.log('location', location);
+    console.log('location.search', location.search);
+    console.log(searchParams.get('index')); // 'name'
+    const index = searchParams.get('index');
+    const newIndex = checkIndex(index);
     setIndex(newIndex);
-  }, [choosenCard, checkIndex]);
+  }, [location, checkIndex]);
 
   useEffect(() => {
     console.log(pockemonCollection.length);
@@ -74,8 +86,7 @@ const PokeGrid = ({ choosenCard = 0 }) => {
     }
 
     newIndex = checkIndex(newIndex);
-
-    setIndex(newIndex);
+    setSearchParams({ index: newIndex });
   };
 
   return (

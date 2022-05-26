@@ -32,7 +32,7 @@ function App() {
               path='/form/:name'
               element={<Form name={'pickachy'} pockemon={'Пикачу'} />}
             />
-            <Route path='/' element={<PokeGrid choosenCard={-5} />} />
+            <Route path='/' element={<PokeGrid />} />
           </Routes>
         </BrowserRouter>
       </Content>
