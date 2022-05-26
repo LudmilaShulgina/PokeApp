@@ -107,6 +107,7 @@ const PokeGrid = () => {
             tag={'yellow'}
             name={pockemonCollection[index].name}
             url={pockemonCollection[index].url}
+            age={index}
           />
         </Col>
         <Col span={4}>

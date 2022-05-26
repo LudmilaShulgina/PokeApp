@@ -22,14 +22,14 @@ function App() {
                 <CustomLink to='/'>Home</CustomLink>
               </Menu.Item>
               <Menu.Item key='form' icon={<MailOutlined />}>
-                <CustomLink to='/form/pickachy'>Form</CustomLink>
+                <CustomLink to='/form'>Form</CustomLink>
               </Menu.Item>
             </Menu>
           </Header>
           <Routes>
             <Route
               exact
-              path='/form/:name'
+              path='/form'
               element={<Form name={'pickachy'} pockemon={'Пикачу'} />}
             />
             <Route path='/' element={<PokeGrid />} />
