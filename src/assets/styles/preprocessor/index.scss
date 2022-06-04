@@ -1,2 +1,9 @@
 @import "vars";
 @import "blocks/grid";
+
+
+button{
+  &:focus{
+    outline: 4px solid black;
+  }
+}

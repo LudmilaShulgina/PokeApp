@@ -5,7 +5,13 @@ const Demo = (props) => {
   const [state, setState] = useState(props);
   const navigate = useNavigate();
 
+  const handleChangeForm = () => {
+    alert('Form Change');
+  };
+
   const handleChange = (event) => {
+    event.stopPropagation();
+    alert('Input Change');
     setState({
       ...state,
       [event.target.dataset.name]: event.target.value,
@@ -35,7 +41,7 @@ const Demo = (props) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} onChange={handleChangeForm}>
         <input data-name={'name'} value={state.name} onChange={handleChange} />
 
         <input

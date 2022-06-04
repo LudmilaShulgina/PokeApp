@@ -14,3 +14,19 @@
 .selected {
   outline: $outline;
 }
+
+.clicked{
+  outline: $yellow solid 5px;
+  -webkit-animation: mymove 2s infinite; /* Chrome, Safari, Opera */
+  animation: mymove 2s infinite;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+  50% {outline-offset: 50px;}
+}
+
+/* Стандартный синтаксис */
+@keyframes mymove {
+  50% {outline-offset: 50px;}
+}

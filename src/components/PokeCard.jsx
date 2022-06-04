@@ -1,5 +1,7 @@
-import React from 'react';
-import { Card } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
+import { Card, Badge } from 'antd';
+import { HeartFilled } from '@ant-design/icons';
+
 const { Meta } = Card;
 //import dog from '../assets/styles/modules/button.module.css';
 import styles from '../assets/styles/modules/card.module.scss';
@@ -12,13 +14,34 @@ const PokeCard = ({
   url,
   tag,
   isSelected,
+  isLiked,
   onClick,
   age = 0,
 }) => {
-  const handleClick = () => {
-    console.log(12, name);
-    onClick(name);
+  const [clicked, setClicked] = useState();
+  const ref = useRef();
 
+  useEffect(() => {
+    ref.current.focus();
+  }, [name]);
+
+  useEffect(() => {
+    if (clicked) {
+      doItLater();
+    }
+  }, [clicked]);
+
+  const doItLater = () => {
+    console.log('doItLater', clicked);
+    setTimeout(() => {
+      setClicked(false);
+    }, 2000);
+  };
+
+  const handleClick = () => {
+    onClick(name);
+    setClicked(true); //true
+    console.log('handleClick', clicked); //undefined
     //console.log(`Click ${name}`);
   };
 
@@ -27,18 +50,22 @@ const PokeCard = ({
   };
 
   return (
-    <Card
-      hoverable
-      style={{ width: 240 }}
-      cover={<img alt='example' src={Img} />}
-      className={classnames(styles[tag], {
-        [styles.selected]: isSelected,
-      })}
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-    >
-      <Meta title={`${name} - ${age}`} description={url} />
-    </Card>
+    <Badge offset={[-20, 20]} count={isLiked ? <HeartFilled /> : null}>
+      <Card
+        hoverable
+        style={{ width: 240 }}
+        cover={<img alt='example' src={Img} />}
+        className={classnames(styles[tag], {
+          [styles.selected]: isSelected,
+          [styles.clicked]: clicked,
+        })}
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+      >
+        <Meta title={`${name} - ${age}`} description={url} />
+        <button ref={ref}>Я кнопка</button>
+      </Card>
+    </Badge>
   );
 };
 

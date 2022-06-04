@@ -19,6 +19,7 @@ const PokeGrid = () => {
   const [index, setIndex] = useState(0);
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [likes, setLikes] = useState([]);
 
   const checkIndex = useCallback(
     (index) => {
@@ -37,25 +38,23 @@ const PokeGrid = () => {
   );
 
   useEffect(() => {
-    console.log('location', location);
-    console.log('location.search', location.search);
-    console.log(searchParams.get('index')); // 'name'
     const index = searchParams.get('index');
     const newIndex = checkIndex(index);
     setIndex(newIndex);
   }, [location, checkIndex]);
-
-  useEffect(() => {
-    console.log(pockemonCollection.length);
-  }, [pockemonCollection]);
 
   const handleClickCard = (name) => {
     // window.localStorage.setItem(
     //   'pockemon',
     //   JSON.stringify([...pockemon, name])
     // );
-
     setPockemon([...pockemon, name]);
+
+    //Буду по клику ставить лайки покемонам
+    const newLikes = likes.includes(name)
+      ? likes.filter((i) => i !== name)
+      : [...likes, name];
+    setLikes(newLikes);
   };
 
   const handleDelete = () => {
@@ -92,6 +91,11 @@ const PokeGrid = () => {
   return (
     <>
       <Row gutter={[16, 16]} className={'grid'}>
+        <Col
+          span={16}
+        >{`Всего лайков: ${likes.length}/${pockemonCollection.length}`}</Col>
+      </Row>
+      <Row gutter={[16, 16]} className={'grid'}>
         <Col span={4}>
           <Button
             type='primary'
@@ -108,6 +112,7 @@ const PokeGrid = () => {
             name={pockemonCollection[index].name}
             url={pockemonCollection[index].url}
             age={index}
+            isLiked={likes.includes(pockemonCollection[index].name)}
           />
         </Col>
         <Col span={4}>
