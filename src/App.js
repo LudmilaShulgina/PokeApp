@@ -30,7 +30,7 @@ function App() {
             <Route
               exact
               path='/form'
-              element={<Form name={'pickachy'} pockemon={'Пикачу'} />}
+              element={<Form name={'pickachy'} pockemon={'Пикачу'} index={5} />}
             />
             <Route path='/' element={<PokeGrid />} />
           </Routes>
