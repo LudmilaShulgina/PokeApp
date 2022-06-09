@@ -10,7 +10,8 @@ const Demo = (props) => {
   const navigate = useNavigate();
 
   const handleChangeForm = () => {
-    alert('Form Change');
+    //alert('Form Change');
+    checkValidation();
   };
 
   const handleChange = (event) => {
