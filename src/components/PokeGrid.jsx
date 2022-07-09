@@ -1,25 +1,30 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { Col, Row, Button } from 'antd';
 import {
   LeftOutlined,
   RightOutlined,
   CloseCircleOutlined,
 } from '@ant-design/icons';
-import pockemons from '../mock/pockemons.json';
+import { PockemonContext } from '../context/pockemonContext';
+import { WordsContext } from '../context/wordsContext';
 import PokeCard from './PokeCard';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useLocation } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 
 const PokeGrid = () => {
-  const [pockemonCollection, setpockemonCollection] = useState(
-    pockemons.results
-  );
+  const { pockemons } = useContext(PockemonContext); //[]
+  const { words, editWords, deleteWords } = useContext(WordsContext); //[]
+  const [pockemonCollection, setpockemonCollection] = useState(pockemons); //[]
   const [pockemon, setPockemon] = useLocalStorage('pockemon', []);
   const [index, setIndex] = useState(0);
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [likes, setLikes] = useState([]);
+
+  useEffect(() => {
+    setpockemonCollection(pockemons);
+  }, [pockemons]);
 
   const checkIndex = useCallback(
     (index) => {
@@ -62,6 +67,7 @@ const PokeGrid = () => {
     const array = [...pockemonCollection]; // make a separate copy of the array
     array.splice(index, 1);
     setpockemonCollection(array);
+    //getPockemons();
 
     //Вариант №2
     // const array = pockemonCollection.filter((item,count)=> index !== count); // make a separate copy of the array
@@ -109,10 +115,16 @@ const PokeGrid = () => {
           <PokeCard
             onClick={handleClickCard}
             tag={'yellow'}
-            name={pockemonCollection[index].name}
-            url={pockemonCollection[index].url}
+            name={
+              pockemonCollection[index] ? pockemonCollection[index].name : ''
+            }
+            url={pockemonCollection[index] ? pockemonCollection[index].url : ''}
             age={index}
-            isLiked={likes.includes(pockemonCollection[index].name)}
+            isLiked={
+              pockemonCollection[index]
+                ? likes.includes(pockemonCollection[index].name)
+                : false
+            }
           />
         </Col>
         <Col span={4}>
